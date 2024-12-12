@@ -1,0 +1,286 @@
+Strahd Campaign
+
+import React, { useState } from 'react';
+
+interface Character {
+  name: string;
+  health: number;
+  armorClass: number;
+  initiative: number;
+  strength: number;
+  dexterity: number;
+  constitution: number;
+  intelligence: number;
+  wisdom: number;
+  charisma: number;
+}
+
+interface Location {
+  name: string;
+  description: string;
+  npcs: NPC[];
+  treasures: Treasure[];
+}
+
+interface NPC {
+  name: string;
+  health: number;
+  armorClass: number;
+  initiative: number;
+  strength: number;
+  dexterity: number;
+  constitution: number;
+  intelligence: number;
+  wisdom: number;
+  charisma: number;
+  dialogue: string[];
+}
+
+interface Treasure {
+  name: string;
+  description: string;
+  value: number;
+}
+
+interface Player {
+  name: string;
+  level: number;
+  experience: number;
+  health: number;
+  armorClass: number;
+  initiative: number;
+  strength: number;
+  dexterity: number;
+  constitution: number;
+  intelligence: number;
+  wisdom: number;
+  charisma: number;
+  skills: string[];
+  equipment: string[];
+}
+
+interface Narrative {
+  prompt: string;
+  choices: string[];
+  outcome: string;
+}
+
+const App = () => {
+  const [character, setCharacter] = useState<Character>({
+    name: 'Player',
+    health: 100,
+    armorClass: 10,
+    initiative: 0,
+    strength: 10,
+    dexterity: 10,
+    constitution: 10,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 10,
+  });
+
+  const [location, setLocation] = useState<Location>({
+    name: 'Barovia',
+    description: 'A land shrouded in mist and darkness.',
+    npcs: [
+      {
+        name: 'Strahd',
+        health: 150,
+        armorClass: 18,
+        initiative: 5,
+        strength: 16,
+        dexterity: 14,
+        constitution: 16,
+        intelligence: 10,
+        wisdom: 14,
+        charisma: 18,
+        dialogue: [
+          'Welcome, mortal, to my domain.',
+          'You will never leave this place.',
+        ],
+      },
+      {
+        name: 'Ireena',
+        health: 100,
+        armorClass: 12,
+        initiative: 2,
+        strength: 10,
+        dexterity: 12,
+        constitution: 12,
+        intelligence: 10,
+        wisdom: 10,
+        charisma: 14,
+        dialogue: [
+          'Please, you must help me.',
+          'I am being pursued by the devil Strahd.',
+        ],
+      },
+    ],
+    treasures: [
+      {
+        name: 'Holy Symbol of Ravenloft',
+        description: 'A symbol of hope in a land of darkness.',
+        value: 100,
+      },
+      {
+        name: 'Dagger of the Vampire Hunter',
+        description: 'A dagger said to be able to vanquish the undead.',
+        value: 200,
+      },
+    ],
+  });
+
+  const [player, setPlayer] = useState<Player>({
+    name: 'Player',
+    level: 1,
+    experience: 0,
+    health: 100,
+    armorClass: 10,
+    initiative: 0,
+    strength: 10,
+    dexterity: 10,
+    constitution: 10,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 10,
+    skills: ['Acrobatics', 'Athletics', 'Insight'],
+    equipment: ['Short sword', 'Leather armor', 'Backpack'],
+  });
+
+  const [narrative, setNarrative] = useState<Narrative>({
+    prompt: 'You find yourself standing in front of a creepy mansion.',
+    choices: ['Enter the mansion', 'Explore the surrounding area'],
+    outcome: '',
+  });
+
+  const [npcDialogue, setNpcDialogue] = useState<string>('');
+
+  const handleNpcInteraction = (npc: NPC) => {
+    setNpcDialogue(
+      npc.dialogue[Math.floor(Math.random() * npc.dialogue.length)]
+    );
+  };
+
+  const handleTreasureCollection = (treasure: Treasure) => {
+    alert(`You have collected the ${treasure.name}!`);
+  };
+
+  const handleCombat = (npc: NPC) => {
+    const playerRoll = Math.floor(Math.random() * 20) + player.initiative;
+    const npcRoll = Math.floor(Math.random() * 20) + npc.initiative;
+
+    if (playerRoll > npcRoll) {
+      alert('You attack first!');
+    } else {
+      alert('The NPC attacks first!');
+    }
+  };
+
+  const handleNarrativeChoice = (choice: string) => {
+    switch (choice) {
+      case 'Enter the mansion':
+        setNarrative({
+          prompt: 'You enter the mansion and find yourself in a grand foyer.',
+          choices: ['Go up the stairs', 'Explore the ground floor'],
+          outcome: '',
+        });
+        break;
+      case 'Explore the surrounding area':
+        setNarrative({
+          prompt: 'You explore the surrounding area and find a small village.',
+          choices: ['Enter the village', 'Return to the mansion'],
+          outcome: '',
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div className="h-screen w-screen flex flex-col items-center justify-center bg-gray-900 text-white">
+      <h1 className="text-3xl font-bold mb-4">Curse of Strahd</h1>
+      <div className="flex flex-row justify-between w-full">
+        {/* Character Section */}
+        <div className="w-1/3 bg-gray-800 p-4 rounded-lg">
+          <h2 className="text-2xl font-bold mb-2">Character</h2>
+          <p>Name: {character.name}</p>
+          <p>Health: {character.health}</p>
+          <p>Armor Class: {character.armorClass}</p>
+          <p>Initiative: {character.initiative}</p>
+          <p>Strength: {character.strength}</p>
+          <p>Dexterity: {character.dexterity}</p>
+          <p>Constitution: {character.constitution}</p>
+          <p>Intelligence: {character.intelligence}</p>
+          <p>Wisdom: {character.wisdom}</p>
+          <p>Charisma: {character.charisma}</p>
+        </div>
+
+        {/* Player Section */}
+        <div className="w-1/3 bg-gray-800 p-4 rounded-lg">
+          <h2 className="text-2xl font-bold mb-2">Player</h2>
+          <p>Name: {player.name}</p>
+          <p>Level: {player.level}</p>
+          <p>Experience: {player.experience}</p>
+          <p>Health: {player.health}</p>
+          <p>Armor Class: {player.armorClass}</p>
+          <p>Initiative: {player.initiative}</p>
+          <p>Strength: {player.strength}</p>
+          <p>Dexterity: {player.dexterity}</p>
+          <p>Constitution: {player.constitution}</p>
+          <p>Intelligence: {player.intelligence}</p>
+          <p>Wisdom: {player.wisdom}</p>
+          <p>Charisma: {player.charisma}</p>
+          <p>Skills: {player.skills.join(', ')}</p>
+          <p>Equipment: {player.equipment.join(', ')}</p>
+        </div>
+
+        {/* Location Section */}
+        <div className="w-1/3 bg-gray-800 p-4 rounded-lg">
+          <h2 className="text-2xl font-bold mb-2">Location</h2>
+          <p>Name: {location.name}</p>
+          <p>Description: {location.description}</p>
+          <h3 className="text-xl font-bold mb-2">NPCs</h3>
+          {location.npcs.map((npc, index) => (
+            <div key={index}>
+              <p>Name: {npc.name}</p>
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded"
+                onClick={() => handleNpcInteraction(npc)}
+              >
+                Talk
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Narrative Section */}
+      <div className="w-full bg-gray-700 p-4 rounded-lg mt-4">
+        <h2 className="text-2xl font-bold mb-2">Narrative</h2>
+        <p>{narrative.prompt}</p>
+        <div className="flex flex-row gap-2 mt-2">
+          {narrative.choices.map((choice, index) => (
+            <button
+              key={index}
+              className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+              onClick={() => handleNarrativeChoice(choice)}
+            >
+              {choice}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Dialogue Section */}
+      {npcDialogue && (
+        <div className="w-full bg-gray-600 p-4 rounded-lg mt-4">
+          <h2 className="text-xl font-bold mb-2">Dialogue</h2>
+          <p>{npcDialogue}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
