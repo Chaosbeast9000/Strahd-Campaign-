@@ -1,0 +1,141 @@
+from flask import Flask, render_template, jsonify, request
+import random
+
+app = Flask(__name__)
+
+# Initial Data
+character = {
+    "name": "Player",
+    "health": 100,
+    "armorClass": 10,
+    "initiative": 0,
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+}
+
+location = {
+    "name": "Barovia",
+    "description": "A land shrouded in mist and darkness.",
+    "npcs": [
+        {
+            "name": "Strahd",
+            "health": 150,
+            "armorClass": 18,
+            "initiative": 5,
+            "strength": 16,
+            "dexterity": 14,
+            "constitution": 16,
+            "intelligence": 10,
+            "wisdom": 14,
+            "charisma": 18,
+            "dialog
+
+Here's how you can convert this JavaScript/TypeScript application into a Python-based equivalent using **Flask** for the backend and **Jinja2** templates for rendering the frontend:
+
+---
+
+### **Python Flask Implementation**
+
+```python
+from flask import Flask, render_template, jsonify, request
+import random
+
+app = Flask(__name__)
+
+# Data Models
+character = {
+    "name": "Player",
+    "health": 100,
+    "armorClass": 10,
+    "initiative": 0,
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10,
+}
+
+location = {
+    "name": "Barovia",
+    "description": "A land shrouded in mist and darkness.",
+    "npcs": [
+        {
+            "name": "Strahd",
+            "health": 150,
+            "armorClass": 18,
+            "initiative": 5,
+            "strength": 16,
+            "dexterity": 14,
+            "constitution": 16,
+            "intelligence": 10,
+            "wisdom": 14,
+            "charisma": 18,
+            "dialogue": [
+                "Welcome, mortal, to my domain.",
+                "You will never leave this place.",
+            ],
+        },
+        {
+            "name": "Ireena",
+            "health": 100,
+            "armorClass": 12,
+            "initiative": 2,
+            "strength": 10,
+            "dexterity": 12,
+            "constitution": 12,
+            "intelligence": 10,
+            "wisdom": 10,
+            "charisma": 14,
+            "dialogue": [
+                "Please, you must help me.",
+                "I am being pursued by the devil Strahd.",
+            ],
+        },
+    ],
+    "treasures": [
+        {
+            "name": "Holy Symbol of Ravenloft",
+            "description": "A symbol of hope in a land of darkness.",
+            "value": 100,
+        },
+        {
+            "name": "Dagger of the Vampire Hunter",
+            "description": "A dagger said to be able to vanquish the undead.",
+            "value": 200,
+        },
+    ],
+}
+
+player = {
+    "name": "Player",
+    "level": 1,
+    "experience": 0,
+    "health": 100,
+    "armorClass": 10,
+    "initiative": 0,
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10,
+    "skills": ["Acrobatics", "Athletics", "Insight"],
+    "equipment": ["Short sword", "Leather armor", "Backpack"],
+}
+
+narrative = {
+    "prompt": "You find yourself standing in front of a creepy mansion.",
+    "choices": ["Enter the mansion", "Explore the surrounding area"],
+    "outcome": "",
+}
+
+
+# Routes
+@app.route("/")
+def index():
+    return render_template("index.html", character=character, player=
