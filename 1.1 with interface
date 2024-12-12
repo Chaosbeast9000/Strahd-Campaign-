@@ -1,4 +1,4 @@
-Strahd Campaign
+//Strahd Campaign
 
 import React, { useState } from 'react';
 
